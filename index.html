@@ -1,421 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mesay Aschalew Mulugeta — Software Engineer</title>
-<meta name="description" content="Mesay Aschalew Mulugeta — Software Engineer working across embedded systems, backend, data, and ML.">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mesay Aschalew Mulugeta— Full Stack Software Developer</title>
+<meta name="description" content="Portfolio of Mesay Aschalew, Full Stack Software Developer." />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#070a13',
+          panel: '#0d1424',
+          panel2: '#111a2e',
+          line: 'rgba(148,163,184,0.12)',
+          cyan: '#2de1e8',
+          blue: '#3e7bfa',
+          violet: '#8b6bff',
+          hi: '#eef2f9',
+          mid: '#8f9ab3',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
 <style>
   :root{
-    --bg:#FAFAF7;
-    --bg-alt:#F1F1EC;
-    --panel:#FFFFFF;
-    --amber:#2451B3;
-    --amber-dim:#B7C6EA;
-    --cyan:#B3542A;
-    --text:#1C1E22;
-    --text-dim:#6B7078;
-    --border:#E1E1DA;
-    --mono:'IBM Plex Mono', ui-monospace, monospace;
-    --sans:'Inter', -apple-system, sans-serif;
+    --cyan:#2de1e8;
+    --blue:#3e7bfa;
+    --violet:#8b6bff;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
   body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--sans);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
+    background:#070a13;
     background-image:
-      radial-gradient(ellipse at top left, rgba(36,81,179,0.05), transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(179,84,42,0.04), transparent 50%);
+      radial-gradient(circle at 15% 8%, rgba(62,123,250,0.16), transparent 45%),
+      radial-gradient(circle at 88% 18%, rgba(139,107,255,0.14), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(45,225,232,0.08), transparent 40%);
   }
-  ::selection{background:var(--amber); color:#fff;}
-  a{color:var(--cyan); text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--amber); outline-offset:3px;}
+  ::selection{ background:var(--cyan); color:#04121a; }
 
-  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  /* scrollbar */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#070a13; }
+  ::-webkit-scrollbar-thumb{ background:#1c2842; border-radius:8px; }
 
-  /* scanline texture, subtle */
-  .crt{
-    position:fixed; inset:0; pointer-events:none; z-index:50;
-    background:repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
-    mix-blend-mode:multiply;
-  }
-
-  /* ---------- HERO / BOOT SEQUENCE ---------- */
-  header.hero{
-    min-height:100vh;
-    display:flex; flex-direction:column; justify-content:center;
-    padding:80px 0 60px;
-    border-bottom:1px solid var(--border);
-  }
-  .term{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:8px;
-    box-shadow:0 20px 50px rgba(28,30,34,0.08);
-    overflow:hidden;
-  }
-  .term-bar{
-    display:flex; align-items:center; gap:8px;
-    padding:10px 14px;
-    background:var(--bg-alt);
-    border-bottom:1px solid var(--border);
-    font-family:var(--mono); font-size:12px; color:var(--text-dim);
-  }
-  .term-dot{width:10px; height:10px; border-radius:50%; background:#3a3d45;}
-  .term-title{margin-left:8px;}
-  .term-body{
-    padding:22px 20px 26px;
-    font-family:var(--mono);
-    font-size:14px;
-    min-height:230px;
-  }
-  .term-body .line{opacity:0; white-space:pre-wrap;}
-  .term-body .ok{color:var(--cyan);}
-  .term-body .prompt{color:var(--amber);}
-  .cursor{
-    display:inline-block; width:8px; height:15px; background:var(--amber);
-    animation:blink 1s steps(1) infinite; vertical-align:text-bottom; margin-left:2px;
-  }
-  @keyframes blink{50%{opacity:0;}}
-
-  .hero-name{
-    font-family:var(--mono); font-weight:700; font-size:clamp(32px,5vw,48px);
-    margin-top:34px; letter-spacing:-0.01em;
-  }
-  .hero-role{
-    color:var(--text-dim); font-size:18px; margin-top:8px;
-  }
-  .hero-links{
-    display:flex; flex-wrap:wrap; gap:18px; margin-top:22px;
-    font-family:var(--mono); font-size:14px;
-  }
-  .hero-links a{color:var(--text); border-bottom:1px solid var(--border); padding-bottom:2px;}
-  .hero-links a:hover{color:var(--amber); border-color:var(--amber); text-decoration:none;}
-  .hero-links a.accent{color:var(--amber); border-color:var(--amber-dim);}
-
-  /* ---------- SECTIONS ---------- */
-  section{padding:70px 0; border-bottom:1px solid var(--border);}
   .eyebrow{
-    font-family:var(--mono); font-size:13px; color:var(--cyan);
-    display:flex; align-items:center; gap:10px; margin-bottom:28px;
-  }
-  .eyebrow::before{content:"//"; color:var(--amber-dim);}
-  h2{font-family:var(--mono); font-size:24px; font-weight:600; margin-bottom:4px;}
-
-  /* projects as process table */
-  .proc-header{
-    display:grid; grid-template-columns:70px 1fr 90px;
-    font-family:var(--mono); font-size:12px; color:var(--text-dim);
-    border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:6px;
-    text-transform:uppercase; letter-spacing:0.05em;
-  }
-  .project{
-    display:grid; grid-template-columns:70px 1fr 90px;
-    gap:6px 16px;
-    padding:20px 0;
-    border-bottom:1px solid var(--border);
-    align-items:start;
-  }
-  .project:last-child{border-bottom:none;}
-  .proc-id{font-family:var(--mono); color:var(--amber-dim); font-size:13px; padding-top:2px;}
-  .proc-status{font-family:var(--mono); color:var(--cyan); font-size:12px; text-align:right; padding-top:3px;}
-  .proj-name{font-family:var(--mono); font-weight:600; font-size:16px; margin-bottom:6px;}
-  .proj-desc{color:var(--text-dim); font-size:14.5px; margin-bottom:8px;}
-  .proj-stack{
-    font-family:var(--mono); font-size:12px; color:var(--amber);
-    display:flex; flex-wrap:wrap; gap:8px;
-  }
-  .proj-stack span{
-    border:1px solid var(--amber-dim); padding:2px 8px; border-radius:3px;
-  }
-  .proj-links{margin-top:10px; font-family:var(--mono); font-size:12.5px; display:flex; gap:14px;}
-
-  /* experience as commit log */
-  .commit{
-    display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border);
-  }
-  .commit:last-child{border-bottom:none;}
-  .commit-hash{
-    font-family:var(--mono); color:var(--amber-dim); font-size:13px; padding-top:2px; flex-shrink:0; width:64px;
-  }
-  .commit-role{font-family:var(--mono); font-weight:600; font-size:15px;}
-  .commit-meta{color:var(--text-dim); font-size:13px; margin-bottom:6px;}
-  .commit-body{font-size:14.5px; color:var(--text);}
-  .commit-body li{margin-left:18px; color:var(--text-dim); margin-top:4px;}
-
-  /* skills as grouped registers */
-  .skills-grid{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
-    gap:24px;
-  }
-  .skill-group{
-    background:var(--panel); border:1px solid var(--border); border-radius:6px; padding:18px 18px 16px;
-  }
-  .skill-group h3{
-    font-family:var(--mono); font-size:12.5px; color:var(--cyan);
-    text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;
-  }
-  .skill-group ul{list-style:none; display:flex; flex-wrap:wrap; gap:8px;}
-  .skill-group li{
-    font-family:var(--mono); font-size:12.5px; color:var(--text);
-    border:1px solid var(--border); border-radius:3px; padding:4px 9px;
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-size:.7rem;
   }
 
-  /* writing */
-  .write-item{padding:14px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;}
-  .write-item:last-child{border-bottom:none;}
-  .write-title{font-size:15px;}
-  .write-meta{font-family:var(--mono); font-size:12.5px; color:var(--text-dim); white-space:nowrap;}
-
-  /* footer / contact */
-  footer{padding:80px 0 60px;}
-  .contact-prompt{
-    font-family:var(--mono); font-size:20px; margin-bottom:24px;
+  .grad-text{
+    background:linear-gradient(100deg, var(--cyan), var(--blue) 55%, var(--violet));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
   }
-  .contact-prompt .prompt{color:var(--amber);}
-  footer .hero-links{margin-top:0;}
-  .foot-note{margin-top:60px; color:var(--text-dim); font-size:12.5px; font-family:var(--mono);}
+  .grad-bar{ background:linear-gradient(90deg, var(--cyan), var(--blue), var(--violet)); }
 
-  @media(max-width:640px){
-    .proc-header, .project{grid-template-columns:50px 1fr; }
-    .proc-status{display:none;}
-    .proc-header span:last-child{display:none;}
+  .btn-primary{
+    background:linear-gradient(100deg, var(--blue), var(--cyan));
+    box-shadow:0 8px 30px -8px rgba(62,123,250,.6);
+  }
+  .btn-primary:hover{ box-shadow:0 10px 40px -6px rgba(45,225,232,.55); transform:translateY(-1px); }
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));
+    border:1px solid var(--line);
+  }
+
+  .noise{
+    position:absolute; inset:0; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- 3D STAGE ---------- */
+  .scene{ perspective:2000px; }
+  .rig{ transform-style:preserve-3d; will-change:transform; transition:transform .25s cubic-bezier(.2,.8,.2,1); }
+
+  @keyframes float{
+    0%,100%{ transform:translateY(0px); }
+    50%{ transform:translateY(-14px); }
+  }
+  .floaty{ animation:float 6s ease-in-out infinite; }
+  .floaty-slow{ animation:float 8s ease-in-out infinite; animation-delay:.6s; }
+
+  /* laptop shell */
+  .laptop{
+    width:100%;
+    transform-style:preserve-3d;
+  }
+  .laptop-lid{
+    background:linear-gradient(160deg,#1a2136,#0a0e18 70%);
+    border:1px solid rgba(148,163,184,0.18);
+    border-radius:18px 18px 6px 6px;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.8), inset 0 0 0 1px rgba(255,255,255,0.03);
+    padding:14px;
+  }
+  .laptop-screen{
+    position:relative;
+    background:#050810;
+    border-radius:8px;
+    overflow:hidden;
+    aspect-ratio:16/10;
+  }
+  .laptop-base{
+    height:14px;
+    background:linear-gradient(180deg,#232c45,#0c1120);
+    border-radius:0 0 14px 14px;
+    margin:0 -6px;
+    box-shadow:0 30px 40px -20px rgba(0,0,0,.7);
+  }
+  .laptop-base::after{
+    content:'';
+    display:block;
+    width:26%;
+    height:6px;
+    margin:0 auto;
+    background:linear-gradient(180deg,#161d33,#0a0e18);
+    border-radius:0 0 8px 8px;
+  }
+
+  /* phone */
+  .phone{
+    width:100%;
+    aspect-ratio:9/19.5;
+    background:linear-gradient(160deg,#1a2136,#0a0e18);
+    border:1px solid rgba(148,163,184,0.18);
+    border-radius:34px;
+    padding:8px;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.85);
+  }
+  .phone-screen{
+    height:100%;
+    width:100%;
+    background:#050810;
+    border-radius:26px;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* coverflow */
+  .coverflow{ position:relative; width:100%; height:100%; transform-style:preserve-3d; perspective:900px; }
+  .cf-card{
+    position:absolute; inset:0; margin:auto;
+    width:78%; height:72%;
+    top:16%;
+    border-radius:10px;
+    transition:transform .6s cubic-bezier(.22,.85,.32,1), opacity .6s ease, filter .6s ease;
+    display:flex; align-items:stretch; justify-content:center;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+
+  .mockup-shot{
+    width:100%; height:100%;
+    position:relative;
+    display:flex; flex-direction:column;
+  }
+
+  .dot{
+    width:6px; height:6px; border-radius:999px;
+    background:rgba(148,163,184,0.35);
+    transition:all .3s ease;
+  }
+  .dot.active{ background:var(--cyan); width:20px; border-radius:999px; }
+
+  /* device tilt cards in portfolio grid */
+  .tilt-card{ transition:transform .35s ease, box-shadow .35s ease; transform-style:preserve-3d; }
+  .tilt-card:hover{ transform:rotateX(4deg) rotateY(-6deg) translateY(-6px) scale(1.015); box-shadow:0 30px 60px -20px rgba(45,225,232,.25); }
+
+  /* timeline */
+  .tl-line{ background:linear-gradient(180deg, var(--cyan), var(--blue), var(--violet)); }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px;
+    background:linear-gradient(90deg,var(--cyan),var(--blue));
+    transition:width .3s ease;
+  }
+  .nav-link:hover::after{ width:100%; }
+
+  .glow-ring{
+    position:absolute; border-radius:999px; filter:blur(60px); pointer-events:none;
   }
 </style>
 </head>
-<body>
-<div class="crt"></div>
+<body class="bg-base text-hi font-body antialiased overflow-x-hidden">
 
-<header class="hero">
-  <div class="wrap">
-    <div class="term">
-      <div class="term-bar">
-        <div class="term-dot" style="background:#e0605090"></div>
-        <div class="term-dot" style="background:#e0c05090"></div>
-        <div class="term-dot" style="background:#60c07090"></div>
-        <span class="term-title">whoami.sh — 80×24</span>
-      </div>
-      <div class="term-body" id="termBody"></div>
-    </div>
+<div class="noise fixed"></div>
 
-    <div class="hero-name">Mesay Aschalew Mulugeta</div>
-    <div class="hero-role">Software Engineer · Embedded Systems, Data &amp; Backend</div>
-
-    <div class="hero-links">
-      <a href="#projects">projects</a>
-      <a href="#experience">experience</a>
-      <a href="#skills">skills</a>
-      <a href="mailto:you@example.com" class="accent">you@example.com</a>
-      <a href="https://github.com/yourusername" class="accent">github</a>
-      <a href="https://linkedin.com/in/yourusername" class="accent">linkedin</a>
-      <a href="/cv.pdf" class="accent">download cv ↓</a>
+<!-- ============ NAV ============ -->
+<header id="top" class="fixed top-0 inset-x-0 z-50">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <div class="mt-4 flex items-center justify-between rounded-2xl border border-line bg-panel/60 backdrop-blur-xl px-5 py-3">
+      <a href="#top" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-lg grad-bar flex items-center justify-center font-display font-bold text-[#04121a] text-sm">Tech<sup>+</sup></span>
+        <span class="font-display text-sm tracking-wide hidden sm:block">Mesay Aschalew</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 font-body text-sm text-mid">
+        <a href="#home" class="nav-link hover:text-hi transition-colors">Home</a>
+        <a href="#about" class="nav-link hover:text-hi transition-colors">About</a>
+        <a href="#work" class="nav-link hover:text-hi transition-colors">Portfolio</a>
+        <a href="#services" class="nav-link hover:text-hi transition-colors">Services</a>
+        <a href="#experience" class="nav-link hover:text-hi transition-colors">Experience</a>
+      </nav>
+      <a href="#contact" class="btn-primary text-[#04121a] font-semibold text-sm px-5 py-2.5 rounded-xl transition-all">Contact</a>
     </div>
   </div>
 </header>
 
-<section id="projects">
-  <div class="wrap">
-    <div class="eyebrow">ps aux | grep projects</div>
-    <h2 style="margin-bottom:24px;">Selected Work</h2>
+<!-- ============ HERO ============ -->
+<section id="home" class="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+  <div class="glow-ring w-[500px] h-[500px] bg-blue/25 -top-40 -left-40"></div>
+  <div class="glow-ring w-[400px] h-[400px] bg-violet/20 top-1/3 -right-20"></div>
 
-    <div class="proc-header">
-      <span>PID</span><span>PROCESS</span><span style="text-align:right;">STATE</span>
+  <div class="mx-auto max-w-7xl px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center w-full">
+    <!-- left -->
+    <div class="reveal in">
+      <p class="eyebrow text-cyan mb-5 flex items-center gap-3">
+        <span class="w-8 h-px bg-cyan"></span> Full stack software developer
+      </p>
+      <h1 class="font-display font-bold leading-[1.05] text-5xl md:text-6xl xl:text-7xl">
+        I build
+        <span class="grad-text">products</span>
+        that feel
+        <span class="grad-text">inevitable.</span>
+      </h1>
+      <p class="mt-6 text-mid text-lg max-w-lg leading-relaxed">
+        I'm Mesay — I design and ship full stack web &amp; mobile products end to end,
+        from database schema to the pixel that makes someone stop scrolling.
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href="#work" class="btn-primary text-[#04121a] font-semibold px-7 py-3.5 rounded-xl transition-all">View Projects</a>
+        <a href="#contact" class="px-7 py-3.5 rounded-xl border border-line text-hi/90 hover:border-cyan/50 hover:text-cyan transition-all font-medium">Let's talk</a>
+      </div>
+
+      <div class="mt-14 grid grid-cols-3 gap-6 max-w-md">
+        <div>
+          <p class="font-display text-3xl font-bold">40+</p>
+          <p class="text-xs text-mid mt-1 font-mono uppercase tracking-wider">Projects shipped</p>
+        </div>
+        <div>
+          <p class="font-display text-3xl font-bold">5<span class="text-cyan">yrs</span></p>
+          <p class="text-xs text-mid mt-1 font-mono uppercase tracking-wider">In production</p>
+        </div>
+        <div>
+          <p class="font-display text-3xl font-bold">18</p>
+          <p class="text-xs text-mid mt-1 font-mono uppercase tracking-wider">Happy clients</p>
+        </div>
+      </div>
     </div>
 
-    <div class="project">
-      <div class="proc-id">0x01</div>
-      <div>
-        <div class="proj-name">Real-time sensor fusion pipeline</div>
-        <div class="proj-desc">Multi-sensor fusion (IMU + LIDAR) for an autonomous ground robot, running fully on embedded hardware. Rewrote the state estimator to hit hard real-time deadlines on a resource-constrained MCU.</div>
-        <div class="proj-stack"><span>C++</span><span>FreeRTOS</span><span>Kalman filtering</span><span>ROS2</span></div>
-        <div class="proj-links"><a href="#">repo →</a><a href="#">writeup →</a></div>
-      </div>
-      <div class="proc-status">RUNNING</div>
-    </div>
+    <!-- right : 3D device stage -->
+    <div class="scene reveal in" id="heroScene">
+      <div class="rig" id="heroRig">
+        <div class="floaty">
+          <div class="laptop mx-auto max-w-md">
+            <div class="laptop-lid">
+              <div class="laptop-screen" id="laptopScreen">
+                <div class="absolute inset-0 flex flex-col">
+                  <div class="flex items-center justify-between px-4 py-2 border-b border-white/5">
+                    <div class="flex gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-[#ff5f57]"></span>
+                      <span class="w-2 h-2 rounded-full bg-[#febc2e]"></span>
+                      <span class="w-2 h-2 rounded-full bg-[#28c840]"></span>
+                    </div>
+                    <p class="eyebrow text-mid">Completed products</p>
+                    <span class="w-8"></span>
+                  </div>
+                  <div class="flex-1 relative px-4 pt-3 pb-4">
+                    <p class="font-display font-bold text-2xl md:text-3xl tracking-tight">PROJECTS<span class="text-cyan">.</span></p>
+                    <div class="coverflow mt-1" id="coverflow"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="laptop-base"></div>
+          </div>
+        </div>
 
-    <div class="project">
-      <div class="proc-id">0x02</div>
-      <div>
-        <div class="proj-name">Streaming analytics platform</div>
-        <div class="proj-desc">Distributed pipeline processing several TB/day of event data, powering near-real-time dashboards for a growing product team. Cut end-to-end latency from minutes to seconds.</div>
-        <div class="proj-stack"><span>Kafka</span><span>Spark</span><span>Python</span><span>Airflow</span></div>
-        <div class="proj-links"><a href="#">repo →</a><a href="#">writeup →</a></div>
+        <!-- floating phone, landscape-mode project view -->
+        <div class="hidden md:block absolute -right-6 -bottom-6 w-40 floaty-slow" style="transform:translateZ(60px) rotate(8deg)">
+          <div class="phone">
+            <div class="phone-screen flex flex-col">
+              <div class="flex items-center justify-between px-3 pt-3">
+                <span class="text-[9px] font-mono text-mid">09:41</span>
+                <span class="text-[9px] font-mono text-mid">●●●</span>
+              </div>
+              <div class="flex-1 flex items-center justify-center p-3">
+                <div class="w-full aspect-video rounded-lg overflow-hidden" style="background:linear-gradient(135deg,var(--blue),var(--violet))"></div>
+              </div>
+              <p class="text-[9px] font-mono text-mid text-center pb-3">swipe to explore →</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="proc-status">RUNNING</div>
     </div>
+  </div>
 
-    <div class="project">
-      <div class="proc-id">0x03</div>
-      <div>
-        <div class="proj-name">Model-serving layer for internal ML tools</div>
-        <div class="proj-desc">Backend + frontend for a suite of internal ML tools used across data science teams, from feature store to inference API to review UI. Adopted org-wide within two quarters.</div>
-        <div class="proj-stack"><span>FastAPI</span><span>React</span><span>PyTorch</span><span>Docker</span></div>
-        <div class="proj-links"><a href="#">repo →</a><a href="#">writeup →</a></div>
+  <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-mid text-xs font-mono flex flex-col items-center gap-2 animate-bounce">
+    scroll <span class="w-px h-6 bg-mid/50"></span>
+  </a>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="relative py-28 border-t border-line">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10 grid lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-4 reveal">
+      <p class="eyebrow text-cyan mb-4">— About</p>
+      <h2 class="font-display font-bold text-4xl leading-tight">Code is the craft.<br/>Product is the point.</h2>
+    </div>
+    <div class="lg:col-span-8 reveal">
+      <p class="text-mid text-lg leading-relaxed">
+        I'm a full stack developer who cares equally about a clean API contract and a
+        transition that feels right under a thumb. My stack runs
+        <span class="text-hi">React, Node.js, and PostgreSQL</span> day to day, with
+        <span class="text-hi">React Native</span> for mobile and a habit of reaching for
+        whatever tool actually fits the problem instead of whatever's trendy.
+      </p>
+      <p class="text-mid text-lg leading-relaxed mt-5">
+        Most of my work starts as a rough idea on a whiteboard and ends as something real
+        people use — an e-commerce storefront, a booking system, a dashboard someone opens
+        every morning with their coffee.
+      </p>
+
+      <div class="mt-10 grid sm:grid-cols-2 gap-4">
+        <div class="card rounded-2xl p-5">
+          <p class="font-mono text-xs text-cyan uppercase tracking-wider mb-2">Frontend</p>
+          <p class="text-sm text-mid">React · Next.js · Tailwind · React Native · TypeScript</p>
+        </div>
+        <div class="card rounded-2xl p-5">
+          <p class="font-mono text-xs text-cyan uppercase tracking-wider mb-2">Backend</p>
+          <p class="text-sm text-mid">Node.js · Express · PostgreSQL · MongoDB · REST/GraphQL</p>
+        </div>
+        <div class="card rounded-2xl p-5">
+          <p class="font-mono text-xs text-cyan uppercase tracking-wider mb-2">Infra</p>
+          <p class="text-sm text-mid">Docker · AWS · CI/CD · Nginx</p>
+        </div>
+        <div class="card rounded-2xl p-5">
+          <p class="font-mono text-xs text-cyan uppercase tracking-wider mb-2">Craft</p>
+          <p class="text-sm text-mid">Motion &amp; interaction design, accessibility, performance</p>
+        </div>
       </div>
-      <div class="proc-status">DONE</div>
     </div>
   </div>
 </section>
 
-<section id="experience">
-  <div class="wrap">
-    <div class="eyebrow">git log --oneline --graph</div>
-    <h2 style="margin-bottom:24px;">Experience</h2>
-
-    <div class="commit">
-      <div class="commit-hash">a1b2c3d</div>
+<!-- ============ PORTFOLIO ============ -->
+<section id="work" class="relative py-28 border-t border-line overflow-hidden">
+  <div class="glow-ring w-[450px] h-[450px] bg-cyan/10 top-0 left-1/2 -translate-x-1/2"></div>
+  <div class="mx-auto max-w-7xl px-6 lg:px-10 relative">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-14 reveal">
       <div>
-        <div class="commit-role">Senior Software Engineer — Company Name</div>
-        <div class="commit-meta">2022 — Present</div>
-        <ul class="commit-body">
-          <li>Led design of [system], improving [metric] by [X%]</li>
-          <li>Mentored [N] engineers; introduced [practice/process]</li>
-        </ul>
+        <p class="eyebrow text-cyan mb-4">— Selected work</p>
+        <h2 class="font-display font-bold text-4xl md:text-5xl">Projects, in motion.</h2>
+      </div>
+      <p class="text-mid max-w-sm text-sm leading-relaxed">
+        Drag, swipe, or wait a beat — the showcase below cycles through shipped work
+        the way you'd flip through it on a phone turned sideways.
+      </p>
+    </div>
+
+    <!-- big showcase device -->
+    <div class="reveal">
+      <div class="scene mx-auto max-w-4xl" id="showScene">
+        <div class="rig" id="showRig">
+          <div class="laptop">
+            <div class="laptop-lid !p-3 md:!p-4">
+              <div class="laptop-screen" id="showScreen">
+                <div class="absolute inset-0 flex flex-col">
+                  <div class="flex items-center justify-between px-5 py-3 border-b border-white/5">
+                    <div class="flex gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+                    </div>
+                    <p class="eyebrow text-mid">landscape preview</p>
+                    <span class="w-10"></span>
+                  </div>
+                  <div class="flex-1 relative px-6 md:px-10 pt-6 pb-6">
+                    <div class="flex items-center justify-between">
+                      <h3 class="font-display font-bold text-3xl md:text-5xl tracking-tight">PROJECTS<span class="text-cyan">.</span></h3>
+                      <div class="hidden sm:flex items-center gap-2" id="showDots"></div>
+                    </div>
+                    <div class="coverflow mt-2" id="showCoverflow" style="height:70%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="laptop-base"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center gap-4 mt-8">
+        <button id="prevBtn" aria-label="Previous project" class="w-11 h-11 rounded-full border border-line flex items-center justify-center hover:border-cyan/60 hover:text-cyan transition-all">←</button>
+        <p class="font-mono text-xs text-mid w-20 text-center"><span id="activeLabel">01</span> / 05</p>
+        <button id="nextBtn" aria-label="Next project" class="w-11 h-11 rounded-full border border-line flex items-center justify-center hover:border-cyan/60 hover:text-cyan transition-all">→</button>
       </div>
     </div>
 
-    <div class="commit">
-      <div class="commit-hash">e4f5g6h</div>
-      <div>
-        <div class="commit-role">Software Engineer — Company Name</div>
-        <div class="commit-meta">2019 — 2022</div>
-        <ul class="commit-body">
-          <li>Built [system/feature] used by [N] users / [scale]</li>
-          <li>Owned [area], reducing [cost/latency/incident rate]</li>
-        </ul>
-      </div>
-    </div>
+    <!-- grid of all projects -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-24" id="projectGrid"></div>
+  </div>
+</section>
 
-    <div class="commit">
-      <div class="commit-hash">i7j8k9l</div>
-      <div>
-        <div class="commit-role">Embedded Systems Engineer — Company Name</div>
-        <div class="commit-meta">2017 — 2019</div>
-        <ul class="commit-body">
-          <li>Developed firmware for [product], shipped in [N] units</li>
-          <li>Optimized [subsystem] to meet real-time constraints</li>
-        </ul>
+<!-- ============ SERVICES ============ -->
+<section id="services" class="relative py-28 border-t border-line">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <p class="eyebrow text-cyan mb-4 reveal">— What I do</p>
+    <h2 class="font-display font-bold text-4xl md:text-5xl mb-14 reveal">From database to deploy.</h2>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="card rounded-2xl p-7 tilt-card reveal">
+        <div class="w-11 h-11 rounded-xl grad-bar mb-6 flex items-center justify-center text-[#04121a] font-bold">01</div>
+        <h3 class="font-display font-semibold text-lg mb-2">Web App Development</h3>
+        <p class="text-sm text-mid leading-relaxed">Full stack web apps built for speed, from marketing sites to complex dashboards.</p>
+      </div>
+      <div class="card rounded-2xl p-7 tilt-card reveal">
+        <div class="w-11 h-11 rounded-xl grad-bar mb-6 flex items-center justify-center text-[#04121a] font-bold">02</div>
+        <h3 class="font-display font-semibold text-lg mb-2">Mobile App Development</h3>
+        <p class="text-sm text-mid leading-relaxed">Cross-platform apps in React Native that feel native, not like a wrapped website.</p>
+      </div>
+      <div class="card rounded-2xl p-7 tilt-card reveal">
+        <div class="w-11 h-11 rounded-xl grad-bar mb-6 flex items-center justify-center text-[#04121a] font-bold">03</div>
+        <h3 class="font-display font-semibold text-lg mb-2">API &amp; Backend Architecture</h3>
+        <p class="text-sm text-mid leading-relaxed">Databases, auth, and APIs designed to hold up under real traffic, not just a demo.</p>
+      </div>
+      <div class="card rounded-2xl p-7 tilt-card reveal">
+        <div class="w-11 h-11 rounded-xl grad-bar mb-6 flex items-center justify-center text-[#04121a] font-bold">04</div>
+        <h3 class="font-display font-semibold text-lg mb-2">Interface &amp; Motion</h3>
+        <p class="text-sm text-mid leading-relaxed">Interaction and micro-animation work that makes an interface feel considered.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="skills">
-  <div class="wrap">
-    <div class="eyebrow">cat /proc/skills</div>
-    <h2 style="margin-bottom:24px;">Skills</h2>
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience" class="relative py-28 border-t border-line">
+  <div class="mx-auto max-w-4xl px-6 lg:px-10">
+    <p class="eyebrow text-cyan mb-4 reveal">— Path so far</p>
+    <h2 class="font-display font-bold text-4xl md:text-5xl mb-16 reveal">Experience.</h2>
 
-    <div class="skills-grid">
-      <div class="skill-group">
-        <h3>Languages</h3>
-        <ul><li>C / C++</li><li>Python</li><li>Go</li><li>JavaScript / TS</li><li>Rust</li></ul>
+    <div class="relative pl-10">
+      <div class="tl-line absolute left-[3px] top-2 bottom-2 w-[2px] rounded-full"></div>
+
+      <div class="relative mb-14 reveal">
+        <span class="absolute -left-10 top-1 w-2.5 h-2.5 rounded-full bg-cyan shadow-[0_0_0_4px_rgba(45,225,232,0.15)]"></span>
+        <p class="font-mono text-xs text-cyan mb-1">2023 — Present</p>
+        <h3 class="font-display font-semibold text-xl">Senior Full Stack Developer</h3>
+        <p class="text-mid text-sm mt-2 leading-relaxed">Leading end-to-end delivery of client web &amp; mobile products, from architecture through launch.</p>
       </div>
-      <div class="skill-group">
-        <h3>Embedded &amp; Robotics</h3>
-        <ul><li>FreeRTOS</li><li>ROS / ROS2</li><li>ARM Cortex-M</li><li>I2C / SPI / CAN</li><li>PCB bring-up</li></ul>
+      <div class="relative mb-14 reveal">
+        <span class="absolute -left-10 top-1 w-2.5 h-2.5 rounded-full bg-blue shadow-[0_0_0_4px_rgba(62,123,250,0.15)]"></span>
+        <p class="font-mono text-xs text-cyan mb-1">2021 — 2023</p>
+        <h3 class="font-display font-semibold text-xl">Full Stack Developer</h3>
+        <p class="text-mid text-sm mt-2 leading-relaxed">Built and shipped React/Node applications for a portfolio of startup and SME clients.</p>
       </div>
-      <div class="skill-group">
-        <h3>Data &amp; ML</h3>
-        <ul><li>Spark</li><li>Kafka</li><li>Airflow</li><li>PyTorch</li><li>SQL</li></ul>
-      </div>
-      <div class="skill-group">
-        <h3>Backend &amp; Infra</h3>
-        <ul><li>FastAPI / Django</li><li>PostgreSQL</li><li>Docker / K8s</li><li>AWS / GCP</li></ul>
-      </div>
-      <div class="skill-group">
-        <h3>Frontend</h3>
-        <ul><li>React</li><li>TypeScript</li><li>Tailwind</li></ul>
+      <div class="relative reveal">
+        <span class="absolute -left-10 top-1 w-2.5 h-2.5 rounded-full bg-violet shadow-[0_0_0_4px_rgba(139,107,255,0.15)]"></span>
+        <p class="font-mono text-xs text-cyan mb-1">2019 — 2021</p>
+        <h3 class="font-display font-semibold text-xl">Freelance Web Developer</h3>
+        <p class="text-mid text-sm mt-2 leading-relaxed">Took projects from first sketch to production for small businesses across e-commerce and services.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="writing">
-  <div class="wrap">
-    <div class="eyebrow">ls -la ./writing</div>
-    <h2 style="margin-bottom:24px;">Writing &amp; Talks</h2>
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="relative py-28 border-t border-line overflow-hidden">
+  <div class="glow-ring w-[400px] h-[400px] bg-violet/20 bottom-0 right-0"></div>
+  <div class="mx-auto max-w-5xl px-6 lg:px-10 relative">
+    <div class="grid lg:grid-cols-2 gap-14 items-start">
+      <div class="reveal">
+        <p class="eyebrow text-cyan mb-4">— Get in touch</p>
+        <h2 class="font-display font-bold text-4xl md:text-5xl leading-tight">Have a product<br/>in mind?</h2>
+        <p class="text-mid mt-6 leading-relaxed max-w-sm">Tell me what you're building. I read every message and usually reply within a day.</p>
 
-    <div class="write-item">
-      <span class="write-title"><a href="#">Article or talk title goes here</a></span>
-      <span class="write-meta">Publication / Venue · 2025</span>
-    </div>
-    <div class="write-item">
-      <span class="write-title"><a href="#">Another article or open-source contribution</a></span>
-      <span class="write-meta">Publication / Venue · 2024</span>
+        <div class="mt-10 space-y-4 font-mono text-sm">
+          <a href="mailto:mesayaschalew3@gmail.com" class="flex items-center gap-3 text-hi hover:text-cyan transition-colors">
+            <span class="w-8 h-8 rounded-lg border border-line flex items-center justify-center">✉</span> mesayaschalew3@gmail.com
+          </a>
+          <div class="flex items-center gap-3 text-mid">
+            <span class="w-8 h-8 rounded-lg border border-line flex items-center justify-center">◎</span> Available for freelance &amp; full-time
+          </div>
+        </div>
+      </div>
+
+      <form class="card rounded-2xl p-7 space-y-5 reveal" onsubmit="event.preventDefault(); this.reset(); document.getElementById('formOk').classList.remove('hidden');">
+        <div>
+          <label class="text-xs font-mono uppercase tracking-wider text-mid">Name</label>
+          <input required type="text" class="mt-2 w-full bg-panel2 border border-line rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan/60 transition-colors" placeholder="Your name" />
+        </div>
+        <div>
+          <label class="text-xs font-mono uppercase tracking-wider text-mid">Email</label>
+          <input required type="email" class="mt-2 w-full bg-panel2 border border-line rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan/60 transition-colors" placeholder="you@email.com" />
+        </div>
+        <div>
+          <label class="text-xs font-mono uppercase tracking-wider text-mid">Message</label>
+          <textarea required rows="4" class="mt-2 w-full bg-panel2 border border-line rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan/60 transition-colors resize-none" placeholder="Tell me about your project"></textarea>
+        </div>
+        <button type="submit" class="btn-primary text-[#04121a] font-semibold w-full py-3.5 rounded-xl transition-all">Send message</button>
+        <p id="formOk" class="hidden text-xs text-cyan font-mono text-center">Message sent — thanks, I'll be in touch.</p>
+      </form>
     </div>
   </div>
 </section>
 
-<footer id="contact">
-  <div class="wrap">
-    <div class="contact-prompt"><span class="prompt">$</span> mail --to=you<span class="cursor"></span></div>
-    <div class="hero-links">
-      <a href="mailto:you@example.com" class="accent">you@example.com</a>
-      <a href="https://github.com/yourusername" class="accent">github</a>
-      <a href="https://linkedin.com/in/yourusername" class="accent">linkedin</a>
+<footer class="border-t border-line py-8">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mid font-mono">
+    <p>© 2026 Fazil Laghari. Built with HTML, Tailwind &amp; a little too much CSS perspective.</p>
+    <div class="flex gap-5">
+      <a href="#" class="hover:text-cyan transition-colors">GitHub</a>
+      <a href="#" class="hover:text-cyan transition-colors">LinkedIn</a>
+      <a href="#" class="hover:text-cyan transition-colors">Dribbble</a>
     </div>
-    <div class="foot-note">© 2026 Mesay Aschalew Mulugeta. Built with plain HTML/CSS, hosted on GitHub Pages.</div>
   </div>
 </footer>
 
 <script>
-const lines = [
-  { text: "$ whoami", cls: "prompt" },
-  { text: "> Mesay Aschalew Mulugeta — software engineer", cls: "" },
-  { text: "", cls: "" },
-  { text: "[ BOOT ] embedded systems & robotics ......... OK", cls: "ok" },
-  { text: "[ BOOT ] backend / distributed systems ........ OK", cls: "ok" },
-  { text: "[ BOOT ] big data & data analysis ............. OK", cls: "ok" },
-  { text: "[ BOOT ] machine learning ...................... OK", cls: "ok" },
-  { text: "[ BOOT ] frontend / full-stack ................. OK", cls: "ok" },
-  { text: "", cls: "" },
-  { text: "READY.", cls: "prompt" },
+/* ---------------- PROJECT DATA ---------------- */
+const projects = [
+  { name:"Bloom", tag:"E-commerce · florist marketplace", g:["#22c55e","#0ea5e9"] },
+  { name:"Pulse", tag:"Mobile · fitness tracking", g:["#f97316","#ef4444"] },
+  { name:"Ledger", tag:"SaaS · freelance invoicing", g:["#3e7bfa","#8b6bff"] },
+  { name:"Nimbus", tag:"Dashboard · cloud file sync", g:["#2de1e8","#3e7bfa"] },
+  { name:"Wanderlist", tag:"Mobile · travel itineraries", g:["#8b6bff","#ec4899"] },
 ];
 
-const body = document.getElementById('termBody');
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function mockupHTML(p){
+  return `
+    <div class="mockup-shot" style="background:linear-gradient(135deg, ${p.g[0]}22, ${p.g[1]}22)">
+      <div class="flex-1 flex items-center justify-center p-4">
+        <div class="w-full h-full rounded-lg" style="background:linear-gradient(135deg, ${p.g[0]}, ${p.g[1]});
+             opacity:.85; position:relative; overflow:hidden;">
+          <div class="absolute inset-0" style="background:repeating-linear-gradient(115deg, rgba(255,255,255,.08) 0 2px, transparent 2px 22px);"></div>
+        </div>
+      </div>
+      <div class="px-4 pb-3 flex items-center justify-between">
+        <div>
+          <p class="font-display font-semibold text-sm">${p.name}</p>
+          <p class="text-[10px] text-mid font-mono">${p.tag}</p>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-1 rounded-full border border-white/15 text-hi/80">Live</span>
+      </div>
+    </div>`;
+}
 
-function render(){
-  lines.forEach(l => {
-    const div = document.createElement('div');
-    div.className = 'line ' + l.cls;
-    div.textContent = l.text || '\u00A0';
-    body.appendChild(div);
+function buildCoverflow(containerId){
+  const el = document.getElementById(containerId);
+  el.innerHTML = projects.map((p,i)=>`<div class="cf-card" data-i="${i}">${mockupHTML(p)}</div>`).join('');
+  return Array.from(el.children);
+}
+
+function layout(cards, active){
+  cards.forEach((card, i)=>{
+    const offset = i - active;
+    const abs = Math.abs(offset);
+    if(abs > 2){
+      card.style.opacity = 0;
+      card.style.pointerEvents = 'none';
+      card.style.transform = `translateX(${offset*60}%) scale(.6)`;
+      return;
+    }
+    card.style.pointerEvents = 'auto';
+    card.style.opacity = 1 - abs*0.35;
+    card.style.zIndex = 10 - abs;
+    card.style.filter = abs===0 ? 'none' : `brightness(${1-abs*0.25})`;
+    card.style.transform =
+      `translateX(${offset*62}%) translateZ(${-abs*120}px) rotateY(${offset*-32}deg) scale(${1-abs*0.16})`;
   });
 }
 
-if (prefersReduced) {
-  render();
-  body.querySelectorAll('.line').forEach(el => el.style.opacity = 1);
-} else {
-  let i = 0;
-  function next(){
-    if (i >= lines.length) {
-      const cur = document.createElement('span');
-      cur.className = 'cursor';
-      body.appendChild(cur);
-      return;
-    }
-    const l = lines[i];
-    const div = document.createElement('div');
-    div.className = 'line ' + l.cls;
-    div.textContent = l.text || '\u00A0';
-    div.style.transition = 'opacity 0.05s';
-    body.appendChild(div);
-    requestAnimationFrame(() => div.style.opacity = 1);
-    i++;
-    setTimeout(next, l.text ? 160 : 60);
-  }
-  next();
-}
-</script>
+/* hero mini coverflow (auto only) */
+const heroCards = buildCoverflow('coverflow');
+let heroActive = 0;
+layout(heroCards, heroActive);
+setInterval(()=>{
+  heroActive = (heroActive+1) % projects.length;
+  layout(heroCards, heroActive);
+}, 2600);
 
+/* main showcase coverflow (interactive) */
+const showCards = buildCoverflow('showCoverflow');
+let showActive = 0;
+const dotsWrap = document.getElementById('showDots');
+projects.forEach((_,i)=>{
+  const d = document.createElement('span');
+  d.className = 'dot' + (i===0?' active':'');
+  d.dataset.i = i;
+  dotsWrap.appendChild(d);
+});
+const activeLabel = document.getElementById('activeLabel');
+
+function setShowActive(i){
+  showActive = (i + projects.length) % projects.length;
+  layout(showCards, showActive);
+  [...dotsWrap.children].forEach((d,idx)=>d.classList.toggle('active', idx===showActive));
+  activeLabel.textContent = String(showActive+1).padStart(2,'0');
+}
+setShowActive(0);
+
+document.getElementById('nextBtn').addEventListener('click', ()=>setShowActive(showActive+1));
+document.getElementById('prevBtn').addEventListener('click', ()=>setShowActive(showActive-1));
+dotsWrap.addEventListener('click', e=>{
+  if(e.target.dataset.i !== undefined) setShowActive(Number(e.target.dataset.i));
+});
+
+/* autoplay showcase, pause on hover */
+let showTimer = setInterval(()=>setShowActive(showActive+1), 3400);
+const showSceneEl = document.getElementById('showScene');
+showSceneEl.addEventListener('mouseenter', ()=>clearInterval(showTimer));
+showSceneEl.addEventListener('mouseleave', ()=>{ showTimer = setInterval(()=>setShowActive(showActive+1), 3400); });
+
+/* swipe support */
+(function addSwipe(el, onLeft, onRight){
+  let startX = null;
+  el.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
+  el.addEventListener('touchend', e=>{
+    if(startX===null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if(dx > 40) onLeft(); else if(dx < -40) onRight();
+    startX = null;
+  });
+})(showSceneEl, ()=>setShowActive(showActive-1), ()=>setShowActive(showActive+1));
+
+/* project grid */
+const gridEl = document.getElementById('projectGrid');
+gridEl.innerHTML = projects.map((p,i)=>`
+  <div class="card tilt-card rounded-2xl overflow-hidden reveal" style="animation-delay:${i*80}ms">
+    <div class="aspect-[4/3] relative" style="background:linear-gradient(135deg, ${p.g[0]}33, ${p.g[1]}33)">
+      <div class="absolute inset-4 rounded-xl" style="background:linear-gradient(135deg, ${p.g[0]}, ${p.g[1]}); opacity:.85"></div>
+      <span class="absolute top-3 left-3 text-[10px] font-mono px-2 py-1 rounded-full bg-base/70 border border-white/10">0${i+1}</span>
+    </div>
+    <div class="p-5 flex items-center justify-between">
+      <div>
+        <p class="font-display font-semibold">${p.name}</p>
+        <p class="text-xs text-mid font-mono mt-1">${p.tag}</p>
+      </div>
+      <span class="text-cyan text-lg">↗</span>
+    </div>
+  </div>
+`).join('');
+
+/* ---------------- 3D TILT ON MOUSE ---------------- */
+function attachTilt(sceneId, rigId, max=10){
+  const scene = document.getElementById(sceneId);
+  const rig = document.getElementById(rigId);
+  if(!scene || !rig) return;
+  scene.addEventListener('mousemove', e=>{
+    const r = scene.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    rig.style.transform = `rotateY(${px*max}deg) rotateX(${-py*max}deg)`;
+  });
+  scene.addEventListener('mouseleave', ()=>{
+    rig.style.transform = `rotateY(-6deg) rotateX(4deg)`;
+  });
+  rig.style.transform = `rotateY(-6deg) rotateX(4deg)`;
+}
+attachTilt('heroScene','heroRig', 12);
+attachTilt('showScene','showRig', 7);
+
+/* ---------------- scroll reveal ---------------- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting) en.target.classList.add('in');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
