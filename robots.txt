@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://softwarewcu.github.io/mesayaschalew.github.io/sitemap.xml
