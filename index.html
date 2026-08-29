@@ -415,7 +415,7 @@
 
       <div class="flex items-center justify-center gap-4 mt-8">
         <button id="prevBtn" aria-label="Previous project" class="w-11 h-11 rounded-full border border-line flex items-center justify-center hover:border-cyan/60 hover:text-cyan transition-all">←</button>
-        <p class="font-mono text-xs text-mid w-20 text-center"><span id="activeLabel">01</span> / 05</p>
+        <p class="font-mono text-xs text-mid w-20 text-center"><span id="activeLabel">01</span> / 09</p>
         <button id="nextBtn" aria-label="Next project" class="w-11 h-11 rounded-full border border-line flex items-center justify-center hover:border-cyan/60 hover:text-cyan transition-all">→</button>
       </div>
     </div>
@@ -540,21 +540,65 @@
 
 <script>
 /* ---------------- PROJECT DATA ---------------- */
+/* Replace each `img` value with your real screenshot path (e.g. "images/yegna-techzone.jpg")
+   once you have it — everything below auto-updates. Until then, a themed sample graphic
+   is generated for each project so the layout previews correctly. */
 const projects = [
-  { name:"Bloom", tag:"E-commerce · florist marketplace", g:["#22c55e","#0ea5e9"] },
-  { name:"Pulse", tag:"Mobile · fitness tracking", g:["#f97316","#ef4444"] },
-  { name:"Ledger", tag:"SaaS · freelance invoicing", g:["#3e7bfa","#8b6bff"] },
-  { name:"Nimbus", tag:"Dashboard · cloud file sync", g:["#2de1e8","#3e7bfa"] },
-  { name:"Wanderlist", tag:"Mobile · travel itineraries", g:["#8b6bff","#ec4899"] },
+  { name:"Yegna TechZone", tag:"E-commerce · electronics marketplace", img:"images/yegna-techzone.jpg", icon:"cart", g:["#3e7bfa","#2de1e8"] },
+  { name:"Enat Kitchen", tag:"Mobile app · Ethiopian traditional recipes", img:"images/enat-kitchen.jpg", icon:"bowl", g:["#f97316","#eab308"] },
+  { name:"Maya Beauty Salon", tag:"Website · salon booking", img:"images/maya-beauty-salon.jpg", icon:"scissors", g:["#ec4899","#8b6bff"] },
+  { name:"QR Kitchen", tag:"QR ordering · hotel menu & kitchen", img:"images/qr-kitchen.jpg", icon:"qr", g:["#22c55e","#0ea5e9"] },
+  { name:"EduTrack", tag:"School management system", img:"images/edutrack.jpg", icon:"cap", g:["#8b6bff","#3e7bfa"] },
+  { name:"DeskLine", tag:"Office support service requests", img:"images/deskline.jpg", icon:"headset", g:["#0ea5e9","#22c55e"] },
+  { name:"MediRecord", tag:"Clinical information management", img:"images/medirecord.jpg", icon:"clipboard", g:["#2de1e8","#3e7bfa"] },
+  { name:"FaceMark", tag:"Face recognition attendance system", img:"images/facemark.jpg", icon:"face", g:["#f97316","#ef4444"] },
+  { name:"OncoPredict", tag:"Web app · breast cancer prediction", img:"images/oncopredict.jpg", icon:"ribbon", g:["#ef4444","#8b6bff"] },
 ];
+
+/* ---- hand-built, original line-icon set (no external assets) ---- */
+const ICONS = {
+  cart: `<path d="M3 4h2l2.2 11.2a1.5 1.5 0 0 0 1.5 1.3h8a1.5 1.5 0 0 0 1.5-1.2L20 8H6.5"/><circle cx="9.5" cy="19.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19.5" r="1.4" fill="currentColor" stroke="none"/>`,
+  bowl: `<path d="M3.5 12.5h17a7.5 7 0 0 1-17 0Z"/><path d="M8.5 12.2c-.3-2 .6-3.4 1.8-4.4M12 12.2c-.2-2.6.8-4.3 2.2-5.5M15.6 12.2c0-2 .7-3.2 1.7-4.2" stroke-linecap="round"/>`,
+  scissors: `<circle cx="6.5" cy="6.5" r="2.3"/><circle cx="6.5" cy="17.5" r="2.3"/><path d="M8.3 8 20 18.5M8.3 16 20 5.5M8.3 8l3 2.7M8.3 16l3-2.7" stroke-linecap="round"/>`,
+  qr: `<rect x="3.5" y="3.5" width="6" height="6" rx="0.8"/><rect x="14.5" y="3.5" width="6" height="6" rx="0.8"/><rect x="3.5" y="14.5" width="6" height="6" rx="0.8"/><rect x="6" y="6" width="1" height="1" fill="currentColor" stroke="none"/><rect x="17" y="6" width="1" height="1" fill="currentColor" stroke="none"/><rect x="6" y="17" width="1" height="1" fill="currentColor" stroke="none"/><path d="M14.5 15h2.5v2.5h-2.5zM19.5 15h1v1h-1zM14.5 19.5h1v1h-1zM17.5 19.5h2.5v1h-2.5z"/>`,
+  cap: `<path d="M2.5 9 12 5l9.5 4L12 13 2.5 9Z"/><path d="M6 10.7v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4" stroke-linecap="round"/><path d="M21 9.3v5" stroke-linecap="round"/>`,
+  headset: `<path d="M4 13.5v-1a8 8 0 0 1 16 0v1" stroke-linecap="round"/><rect x="2.8" y="13" width="3.4" height="5" rx="1.2"/><rect x="17.8" y="13" width="3.4" height="5" rx="1.2"/><path d="M17.8 18.3v.7a2.5 2.5 0 0 1-2.5 2.5h-2.8" stroke-linecap="round"/>`,
+  clipboard: `<rect x="5" y="4" width="14" height="17" rx="1.6"/><rect x="9" y="2.3" width="6" height="3.2" rx="1"/><path d="M7.5 13h2.5l1.4-2.6 1.7 4.6 1.3-2h2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
+  face: `<path d="M4 8V6a2 2 0 0 1 2-2h2M4 16v2a2 2 0 0 0 2 2h2M20 8V6a2 2 0 0 0-2-2h-2M20 16v2a2 2 0 0 1-2 2h-2" stroke-linecap="round"/><circle cx="9.5" cy="11.5" r="0.9" fill="currentColor" stroke="none"/><circle cx="14.5" cy="11.5" r="0.9" fill="currentColor" stroke="none"/><path d="M9 15.2c.9.8 4.1.8 5 0" stroke-linecap="round"/>`,
+  ribbon: `<path d="M9 3.5c1 2 1.4 3.6 1.4 5.4 0 1.4-.5 2.2-1 3M15 3.5c-1 2-1.4 3.6-1.4 5.4 0 1.4.5 2.2 1 3" stroke-linecap="round"/><circle cx="12" cy="15.5" r="4.7"/><path d="M9 15.5h1.4l1-2 1.4 4 1-2H16" stroke-linecap="round" stroke-linejoin="round"/>`,
+};
+
+function sampleGraphic(p){
+  const iconMarkup = ICONS[p.icon] || '';
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="${p.g[0]}"/>
+          <stop offset="1" stop-color="${p.g[1]}"/>
+        </linearGradient>
+        <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+          <circle cx="1.2" cy="1.2" r="1.2" fill="rgba(255,255,255,0.16)"/>
+        </pattern>
+      </defs>
+      <rect width="400" height="300" fill="url(#g)"/>
+      <rect width="400" height="300" fill="url(#dots)"/>
+      <g transform="translate(160,110) scale(3.3)" color="#ffffff" fill="none" stroke="#ffffff" stroke-width="1.15" opacity="0.92">
+        ${iconMarkup}
+      </g>
+    </svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
 
 function mockupHTML(p){
   return `
     <div class="mockup-shot" style="background:linear-gradient(135deg, ${p.g[0]}22, ${p.g[1]}22)">
       <div class="flex-1 flex items-center justify-center p-4">
-        <div class="w-full h-full rounded-lg" style="background:linear-gradient(135deg, ${p.g[0]}, ${p.g[1]});
-             opacity:.85; position:relative; overflow:hidden;">
-          <div class="absolute inset-0" style="background:repeating-linear-gradient(115deg, rgba(255,255,255,.08) 0 2px, transparent 2px 22px);"></div>
+        <div class="w-full h-full rounded-lg relative overflow-hidden" style="background:linear-gradient(135deg, ${p.g[0]}, ${p.g[1]});">
+          <img src="${p.img}" alt="${p.name} project screenshot"
+               class="absolute inset-0 w-full h-full object-cover"
+               onerror="this.onerror=null;this.src='${sampleGraphic(p)}';" loading="lazy" />
+          <div class="absolute inset-0 pointer-events-none" style="background:repeating-linear-gradient(115deg, rgba(255,255,255,.08) 0 2px, transparent 2px 22px);"></div>
         </div>
       </div>
       <div class="px-4 pb-3 flex items-center justify-between">
@@ -649,8 +693,10 @@ showSceneEl.addEventListener('mouseleave', ()=>{ showTimer = setInterval(()=>set
 const gridEl = document.getElementById('projectGrid');
 gridEl.innerHTML = projects.map((p,i)=>`
   <div class="card tilt-card rounded-2xl overflow-hidden reveal" style="animation-delay:${i*80}ms">
-    <div class="aspect-[4/3] relative" style="background:linear-gradient(135deg, ${p.g[0]}33, ${p.g[1]}33)">
-      <div class="absolute inset-4 rounded-xl" style="background:linear-gradient(135deg, ${p.g[0]}, ${p.g[1]}); opacity:.85"></div>
+    <div class="aspect-[4/3] relative overflow-hidden" style="background:linear-gradient(135deg, ${p.g[0]}33, ${p.g[1]}33)">
+      <img src="${p.img}" alt="${p.name} project screenshot"
+           class="absolute inset-0 w-full h-full object-cover"
+           onerror="this.onerror=null;this.src='${sampleGraphic(p)}';" loading="lazy" />
       <span class="absolute top-3 left-3 text-[10px] font-mono px-2 py-1 rounded-full bg-base/70 border border-white/10">0${i+1}</span>
     </div>
     <div class="p-5 flex items-center justify-between">
